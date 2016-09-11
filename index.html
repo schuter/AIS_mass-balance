@@ -1,31 +1,37 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8"> <!-- Set character formatting -->
+		<title>Drainage Basin Selection</title>
+		<!-- Link the javascript library on the web -->
+		<script type="text/javascript" src="./js/d3.js"></script>
+	</head>
+	<style>
+	</style>
+	<body>
+	<script type="text/javascript">
+  			var path = d3.geoPath();
 
-<head>
+  			//Width and height
+			var w = 1000;
+			var h = 1000;
 
-    <meta charset=utf-8 />
-    <title> Greenland - taking a look underneath</title>
-    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+			//Define default path generator
+			var path = d3.geoPath();
 
-    <!-- import mapbox -->
-    <script src='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.js'></script>
-    <link href='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.css' rel='stylesheet' />
+			//Create SVG element
+			var svg = d3.select("body")
+						.append("svg")
+						.attr("width", w)
+						.attr("height", h);
 
-    <link type='text/css' href='css/main.css' rel='stylesheet' />
-
-</head>
-
-<body>
-
-    <!-- import omnivore to help with csv input -->
-    <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-omnivore/v0.2.0/leaflet-omnivore.min.js'></script>
-
-    <!-- define section place holder for map -->
-    <div id='map'></div>
-
-    <!-- call the main app code -->
-    <script src='js/basemap.js'></script>
-
-</body>
-
+		d3.json("./datasets/drainage_basins_gjson.geojson", function(json){
+			svg.selectAll("path")
+				.data(json.features)
+				.enter()
+				.append("path")
+				.attr("d", path);
+		});
+		</script>
+	</body>
 </html>
